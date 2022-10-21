@@ -1,0 +1,117 @@
+.notification {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  height: inherit;
+  border-radius: 6px;
+  padding: rem(12);
+  @include sm-block() {
+    padding: 1rem;
+  }
+  @include xl-block() {
+    padding: rem(20) rem(25);
+  }
+
+  $themes: (
+    (loader, $light-grey),
+    (warning, $light-orange2),
+    (error, $light-red2),
+    (success, $light-green4),
+    (darkInfo, $light-grey),
+    (lightInfo, $white)
+  );
+
+  @each $name, $backgroundColor in $themes {
+    &.#{$name} {
+      color: #fff8e5;
+      width: 100%;
+      height: inherit;
+      background-color: $backgroundColor;
+    }
+
+    &__image {
+      display: none;
+      flex-shrink: 0;
+      margin-right: rem(12);
+      @include sm-block() {
+        display: block;
+      }
+
+      .icon {
+        width: 20px;
+        height: 20px;
+        @include xl-block() {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+
+    &__title {
+      @include font-header(17, 24, $text-color);
+
+      &:not(:last-child) {
+        margin-bottom: rem(4);
+      }
+    }
+
+    &__text {
+      @include font-body(16, 24, $text-color);
+
+      &:not(:last-child) {
+        margin-bottom: rem(4);
+      }
+
+      @include xl-block() {
+        &:not(:last-child) {
+          margin-bottom: rem(8);
+        }
+      }
+    }
+    &__button {
+      font-family: $defaultFont;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 20px;
+      color: #64af32;
+      cursor: pointer;
+      @include xl-block() {
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+  }
+
+  &.loader {
+    flex-direction: column;
+    @include sm-block() {
+      flex-direction: row;
+    }
+
+    .notification__image {
+      display: block;
+      margin-bottom: rem(8);
+      @include sm-block() {
+        display: flex;
+      }
+    }
+  }
+
+  &.lightInfo {
+    box-shadow: 0 0 24px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.loader {
+  .notification__image {
+    animation: spin 4s linear infinite;
+  }
+
+  @keyframes spin {
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+}
